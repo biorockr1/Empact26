@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>+EMPACT 2026 | Tata Steel</title>
+   
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+   
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tataBlue: '#0033A0',
+                        forestGreen: '#1E5631',
+                        steelGrey: '#58595B',
+                        lightGrey: '#F5F7FA'
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(to right, rgba(0, 51, 160, 0.85), rgba(30, 86, 49, 0.85)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop')",
+                        'tech-pattern': "url('data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'none\\' fill-rule=\\'evenodd\\'%3E%3Cg fill=\\'%230033a0\\' fill-opacity=\\'0.05\\'%3E%3Cpath d=\\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Plus sign gradient animation */
+        .animated-plus {
+            background: linear-gradient(90deg, #1E5631, #00bd56, #1E5631);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Glassmorphism for header */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* AI Result Formats */
+        #ai-response-text ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        #ai-response-text li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        #ai-response-text li::before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body class="font-inter text-steelGrey bg-lightGrey antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo Area -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+                    <div class="w-10 h-10 bg-tataBlue rounded flex items-center justify-center text-white font-montserrat font-bold text-xl">
+                        T
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-montserrat font-bold text-tataBlue leading-tight tracking-wide">TATA STEEL</span>
+                        <span class="font-inter text-[10px] text-steelGrey uppercase tracking-widest">Internal Summit</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#vision" class="font-medium text-sm text-steelGrey hover:text-tataBlue transition-colors">Vision</a>
+                    <a href="#themes" class="font-medium text-sm text-steelGrey hover:text-tataBlue transition-colors">Core Themes</a>
+                    <a href="#agenda" class="font-medium text-sm text-steelGrey hover:text-tataBlue transition-colors">Agenda</a>
+                    <a href="#ai-prep" class="font-medium text-sm text-tataBlue flex items-center gap-1 hover:text-blue-800 transition-colors">
+                        <i class="ph-fill ph-sparkle"></i> AI Prep
+                    </a>
+                    <a href="#register" class="bg-forestGreen hover:bg-green-800 text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        Register / RSVP
+                    </a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-steelGrey hover:text-tataBlue focus:outline-none">
+                        <i class="ph ph-list text-3xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/50"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white reveal">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
+                <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="text-sm font-medium tracking-wide uppercase">Strategic Internal Summit 2026</span>
+            </div>
+           
+            <h1 class="font-montserrat text-6xl md:text-8xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+                <sup class="text-5xl md:text-6xl animated-plus font-black">+</sup>EMPACT
+            </h1>
+           
+            <p class="font-montserrat text-xl md:text-2xl font-medium text-gray-200 mb-8 max-w-3xl mx-auto drop-shadow-md">
+                Restrategizing the Future of Tata Steel Environment Management.
+            </p>
+           
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-10 font-medium text-gray-100">
+                <div class="flex items-center gap-2 bg-black/30 px-5 py-3 rounded-lg backdrop-blur-sm">
+                    <i class="ph ph-calendar-blank text-xl text-forestGreen"></i>
+                    <span>March 17-18, 2026</span>
+                </div>
+                <div class="flex items-center gap-2 bg-black/30 px-5 py-3 rounded-lg backdrop-blur-sm">
+                    <i class="ph ph-map-pin text-xl text-tataBlue"></i>
+                    <span>Lake View Recreation Centre, Tata Steel Sponge Iron, Joda</span>
+                </div>
+            </div>
+
+            <a href="#register" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-tataBlue bg-white rounded-full hover:bg-gray-100 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] transform hover:-translate-y-1">
+                Confirm Your Attendance
+                <i class="ph ph-arrow-right ml-2 text-xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- The +EMPACT Vision -->
+    <section id="vision" class="py-20 bg-white relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-tech-pattern opacity-50 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="font-montserrat text-tataBlue font-bold text-sm tracking-widest uppercase mb-2">The Vision</h2>
+                    <h3 class="font-montserrat text-4xl font-extrabold text-gray-900 mb-6 leading-tight">
+                        Environment Management for <span class="text-forestGreen">Proactive Action</span>
+                    </h3>
+                    <div class="w-20 h-1 bg-gradient-to-r from-tataBlue to-forestGreen mb-8"></div>
+                    <p class="text-lg text-steelGrey mb-6 leading-relaxed">
+                        This year's meet is a strategic pivot. It is not just about reviewing current metrics; it is about <strong class="text-gray-900">rewriting the playbook</strong>.
+                    </p>
+                    <p class="text-lg text-steelGrey leading-relaxed mb-8">
+                        By placing Digital and Generative AI at the center of our environmental strategy, +EMPACT aims to evolve Tata Steel’s foundational policies—transitioning from reactive compliance to predictive, future-ready sustainability.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-check-circle text-2xl text-forestGreen mt-0.5"></i>
+                            <span class="text-gray-700 font-medium">From "Minimizing Impact" to "Nature-Positive Operations"</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-check-circle text-2xl text-forestGreen mt-0.5"></i>
+                            <span class="text-gray-700 font-medium">From "Waste Management" to "AI-Optimized Circularity"</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="ph-fill ph-check-circle text-2xl text-forestGreen mt-0.5"></i>
+                            <span class="text-gray-700 font-medium">From "Standard Compliance" to "Real-time, GenAI-Monitored Governance"</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative reveal delay-200">
+                    <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl relative">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" alt="Technology and Environment" class="object-cover w-full h-full">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-tataBlue/40 to-forestGreen/40 mix-blend-multiply"></div>
+                       
+                        <!-- Floating Tech Nodes -->
+                        <div class="absolute top-10 left-10 bg-white/90 backdrop-blur p-4 rounded-xl shadow-lg flex items-center gap-3 animate-[bounce_4s_infinite]">
+                            <i class="ph-fill ph-leaf text-forestGreen text-2xl"></i>
+                            <div>
+                                <p class="text-xs text-gray-500 font-bold uppercase">Target 2030</p>
+                                <p class="text-sm font-extrabold text-gray-900">< 1.8 tCO2/tcs</p>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-10 right-10 bg-white/90 backdrop-blur p-4 rounded-xl shadow-lg flex items-center gap-3 animate-[bounce_5s_infinite_reverse]">
+                            <i class="ph-fill ph-cpu text-tataBlue text-2xl"></i>
+                            <div>
+                                <p class="text-xs text-gray-500 font-bold uppercase">Active Models</p>
+                                <p class="text-sm font-extrabold text-gray-900">600+ AI Nodes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Themes Section -->
+    <section id="themes" class="py-24 bg-lightGrey">
+        <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-4xl mx-auto mb-16 reveal">
+                <h2 class="font-montserrat text-tataBlue font-bold text-sm tracking-widest uppercase mb-2">Pillars of Transformation</h2>
+                <h3 class="font-montserrat text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">The Intelligence Shift:<br>Elevating Every Environmental Metric</h3>
+                <p class="text-lg text-steelGrey">Exploring the intersection of heavy industry, artificial intelligence, and proactive ecological stewardship.</p>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                <!-- Theme 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group flex flex-col reveal delay-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center group-hover:bg-tataBlue transition-colors duration-300 flex-shrink-0">
+                            <i class="ph ph-drop text-3xl text-tataBlue group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-montserrat text-xl font-bold text-gray-900">Intelligent Resources & Circularity</h4>
+                            <p class="text-tataBlue text-sm font-bold uppercase tracking-wide">Water, Waste, & Slag</p>
+                        </div>
+                    </div>
+                   
+                    <p class="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
+                        Shifting the narrative from reactive waste disposal to AI-driven resource loops. We are turning environmental liabilities into high-value assets by moving to predictive metrics like <strong>"Water Intensity per Tonne"</strong>.
+                    </p>
+
+                    <ul class="space-y-3 text-sm text-gray-700 mb-8">
+                        <li class="flex items-start gap-2">
+                            <i class="ph-fill ph-check-circle text-tataBlue mt-0.5 text-lg"></i>
+                            <span><strong>Predictive Water Treatment:</strong> AI adjusts chemical dosing in real-time for compliant, low-energy discharge.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="ph-fill ph-check-circle text-tataBlue mt-0.5 text-lg"></i>
+                            <span><strong>Waste-to-Value:</strong> ML models proactively tailor slag chemistry for cement industry utilization.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Theme 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group flex flex-col reveal delay-200">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center group-hover:bg-forestGreen transition-colors duration-300 flex-shrink-0">
+                            <i class="ph ph-wind text-3xl text-forestGreen group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-montserrat text-xl font-bold text-gray-900">The Transparent Canopy & Proactive Compliance</h4>
+                            <p class="text-forestGreen text-sm font-bold uppercase tracking-wide">Air Emissions & Monitoring</p>
+                        </div>
+                    </div>
+                   
+                    <p class="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
+                        Tackling localized environmental impacts by moving from periodic stack testing to 24/7 <strong>Continuous Emission Monitoring Systems (CEMS)</strong> integrated with proactive AI control.
+                    </p>
+
+                    <ul class="space-y-3 text-sm text-gray-700 mb-8">
+                        <li class="flex items-start gap-2">
+                            <i class="ph-fill ph-check-circle text-forestGreen mt-0.5 text-lg"></i>
+                            <span><strong>Virtual Sensors:</strong> AI predicts NOx spikes and autonomously adjusts ammonia injection to neutralize threats.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="ph-fill ph-check-circle text-forestGreen mt-0.5 text-lg"></i>
+                            <span><strong>Dispersion Modeling:</strong> IoT sensors map dust dispersion to proactively safeguard communities.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Theme 3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group flex flex-col reveal delay-300">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center group-hover:bg-steelGrey transition-colors duration-300 flex-shrink-0">
+                            <i class="ph ph-microscope text-3xl text-steelGrey group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-montserrat text-xl font-bold text-gray-900">The AI-Powered Lab & "Right-First-Time"</h4>
+                            <p class="text-steelGrey text-sm font-bold uppercase tracking-wide">Quality & Output</p>
+                        </div>
+                    </div>
+                   
+                    <p class="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
+                        Bridging the gap between quality control and environmental impact. We are moving to real-time <strong>"Predictive Quality"</strong> to eliminate the massive energy penalty of reworking defective scrap.
+                    </p>
+
+                    <ul class="space-y-3 text-sm text-gray-700 mb-8">
+                        <li class="flex items-start gap-2">
+                            <i class="ph-fill ph-check-circle text-steelGrey mt-0.5 text-lg"></i>
+                            <span><strong>Autonomous Lab:</strong> Deep learning and laser scanning spot micro-defects in real-time.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="ph-fill ph-check-circle text-steelGrey mt-0.5 text-lg"></i>
+                            <span><strong>Defect Forecasting:</strong> Predict and correct chemistry mid-process for a guaranteed "Right-First-Time" heat.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agenda Section -->
+    <section id="agenda" class="py-24 bg-lightGrey">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="text-center mb-16">
+                <h2 class="font-montserrat text-tataBlue font-bold text-sm tracking-widest uppercase mb-2">Schedule</h2>
+                <h3 class="font-montserrat text-4xl font-extrabold text-gray-900 mb-4">Event Agenda</h3>
+                <p class="text-lg text-steelGrey">A comprehensive two-day roadmap for environmental transformation and tech integration.</p>
+            </div>
+
+            <!-- Day 1 -->
+            <div class="mb-16">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-12 h-12 bg-tataBlue rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">1</div>
+                    <h4 class="font-montserrat text-2xl font-bold text-gray-900">Day 1</h4>
+                </div>
+               
+                <div class="space-y-4">
+                    <!-- Session 1.1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-tataBlue transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-blue-50 text-tataBlue font-semibold text-sm rounded-md border border-blue-100 group-hover:bg-tataBlue group-hover:text-white transition-colors">10:00 - 10:10</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 1.1: Key note welcome and context setting</h5>
+                            <div class="flex flex-wrap gap-4 mt-2 text-sm text-steelGrey">
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-microphone-stage text-gray-400"></i> Speaker: Amit Ranjan Chakraborty</div>
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-user-circle text-gray-400"></i> Lead: Utsav Kashyap</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session 1.2 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-tataBlue transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-blue-50 text-tataBlue font-semibold text-sm rounded-md border border-blue-100 group-hover:bg-tataBlue group-hover:text-white transition-colors">10:10 - 10:30</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 1.2: Driving the Vision: A Strategic Address</h5>
+                            <div class="flex flex-wrap gap-4 mt-2 text-sm text-steelGrey">
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-microphone-stage text-gray-400"></i> Speakers: Rajiv Mangal, Debashis Jena</div>
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-user-circle text-gray-400"></i> Lead: Shibojyoti Dutta</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Break -->
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 flex flex-col md:flex-row gap-4 md:items-center">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="text-steelGrey font-medium text-sm">10:30 - 10:45</span>
+                        </div>
+                        <div class="flex-grow flex items-center gap-2">
+                            <i class="ph-fill ph-coffee text-forestGreen text-xl"></i>
+                            <h5 class="font-semibold text-gray-700">Tea break</h5>
+                        </div>
+                    </div>
+
+                    <!-- Session 2.1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-tataBlue transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-blue-50 text-tataBlue font-semibold text-sm rounded-md border border-blue-100 group-hover:bg-tataBlue group-hover:text-white transition-colors">10:45 - 13:00</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 2.1: Pioneering Practices: The EMPACT Launch Showcase</h5>
+                            <div class="flex flex-wrap gap-4 mt-2 text-sm text-steelGrey">
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-users-three text-gray-400"></i> Individual participants</div>
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-user-circle text-gray-400"></i> Lead: Priyanka Upadhyay</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lunch -->
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 flex flex-col md:flex-row gap-4 md:items-center">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="text-steelGrey font-medium text-sm">13:00 - 14:00</span>
+                        </div>
+                        <div class="flex-grow flex items-center gap-2">
+                            <i class="ph-fill ph-fork-knife text-tataBlue text-xl"></i>
+                            <h5 class="font-semibold text-gray-700">Lunch</h5>
+                        </div>
+                    </div>
+
+                    <!-- Session 3.1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-tataBlue transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-blue-50 text-tataBlue font-semibold text-sm rounded-md border border-blue-100 group-hover:bg-tataBlue group-hover:text-white transition-colors">14:00 - 16:00</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 3.1: The Innovation Forge: Pitching the Next Big Idea</h5>
+                            <div class="flex flex-wrap gap-4 mt-2 text-sm text-steelGrey">
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-users-three text-gray-400"></i> Interactive Groups</div>
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-user-circle text-gray-400"></i> Lead: Omkar Avinash Shinde</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Break -->
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 flex flex-col md:flex-row gap-4 md:items-center">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="text-steelGrey font-medium text-sm">16:00 - 16:30</span>
+                        </div>
+                        <div class="flex-grow flex items-center gap-2">
+                            <i class="ph-fill ph-coffee text-forestGreen text-xl"></i>
+                            <h5 class="font-semibold text-gray-700">Tea break</h5>
+                        </div>
+                    </div>
+
+                    <!-- Session 3.2 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-tataBlue transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-blue-50 text-tataBlue font-semibold text-sm rounded-md border border-blue-100 group-hover:bg-tataBlue group-hover:text-white transition-colors">16:30 - 17:30</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 3.2: The Innovation Forge: Continuation</h5>
+                        </div>
+                    </div>
+
+                    <!-- Cultural Evening -->
+                    <div class="bg-tataBlue/10 rounded-xl border border-tataBlue/20 p-5 flex flex-col md:flex-row gap-4 md:items-center">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="text-tataBlue font-bold text-sm">18:00 - 20:00</span>
+                        </div>
+                        <div class="flex-grow flex items-center gap-3">
+                            <i class="ph-fill ph-confetti text-tataBlue text-2xl"></i>
+                            <h5 class="font-bold text-tataBlue text-lg">Starlight Gala: A Cultural Celebration</h5>
+                        </div>
+                    </div>
+
+                    <!-- Dinner -->
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 flex flex-col md:flex-row gap-4 md:items-center">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="text-steelGrey font-medium text-sm">20:00 - 21:00</span>
+                        </div>
+                        <div class="flex-grow flex items-center gap-2">
+                            <i class="ph-fill ph-bowl-food text-forestGreen text-xl"></i>
+                            <h5 class="font-semibold text-gray-700">Dinner</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-12 h-12 bg-forestGreen rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">2</div>
+                    <h4 class="font-montserrat text-2xl font-bold text-gray-900">Day 2</h4>
+                </div>
+               
+                <div class="space-y-4">
+                    <!-- Session 4.1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-forestGreen transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-green-50 text-forestGreen font-semibold text-sm rounded-md border border-green-100 group-hover:bg-forestGreen group-hover:text-white transition-colors">09:00 - 11:00</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 4.1: Collaborating for Tomorrow: Tech Partners Session</h5>
+                            <p class="text-steelGrey text-sm mb-2">(Shortlist 2-3, outreach, moderation plan)</p>
+                            <div class="flex flex-wrap gap-4 text-sm text-steelGrey">
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-users-three text-gray-400"></i> Speaker: Individual Vendors</div>
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-user-circle text-gray-400"></i> Lead: Sanjay Kumar</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Break -->
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 flex flex-col md:flex-row gap-4 md:items-center">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="text-steelGrey font-medium text-sm">11:00 - 11:30</span>
+                        </div>
+                        <div class="flex-grow flex items-center gap-2">
+                            <i class="ph-fill ph-coffee text-forestGreen text-xl"></i>
+                            <h5 class="font-semibold text-gray-700">Tea break</h5>
+                        </div>
+                    </div>
+
+                    <!-- Session 5.1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-forestGreen transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-green-50 text-forestGreen font-semibold text-sm rounded-md border border-green-100 group-hover:bg-forestGreen group-hover:text-white transition-colors">11:30 - 12:45</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 5.1: Collaborating for Tomorrow: Tech Partners Session</h5>
+                            <div class="flex flex-wrap gap-4 mt-2 text-sm text-steelGrey">
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-users-three text-gray-400"></i> Speaker: Individual Vendors</div>
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-user-circle text-gray-400"></i> Lead: Sanjay Kumar</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Session 5.2 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 flex flex-col md:flex-row gap-4 md:items-center hover:border-forestGreen transition-colors group">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="inline-block px-3 py-1 bg-green-50 text-forestGreen font-semibold text-sm rounded-md border border-green-100 group-hover:bg-forestGreen group-hover:text-white transition-colors">12:45 - 13:00</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h5 class="font-bold text-gray-900 text-lg">Session 5.2: Vote of Thanks</h5>
+                            <div class="flex flex-wrap gap-4 mt-2 text-sm text-steelGrey">
+                                <div class="flex items-center gap-1"><i class="ph-fill ph-microphone-stage text-gray-400"></i> Speaker: Anoop Srivastava</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lunch -->
+                    <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 flex flex-col md:flex-row gap-4 md:items-center">
+                        <div class="md:w-48 flex-shrink-0">
+                            <span class="text-steelGrey font-medium text-sm">13:00 - 14:00</span>
+                        </div>
+                        <div class="flex-grow flex items-center gap-2">
+                            <i class="ph-fill ph-fork-knife text-tataBlue text-xl"></i>
+                            <h5 class="font-semibold text-gray-700">Lunch</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-Summit AI Brainstorming Section (Powered by Gemini) -->
+    <section id="ai-prep" class="py-20 bg-[#f8fafc] border-y border-gray-200 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5 pointer-events-none bg-tech-pattern"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+                <div class="bg-gradient-to-r from-tataBlue to-blue-900 p-8 text-white relative">
+                    <!-- Decor node -->
+                    <div class="absolute right-6 top-6 opacity-20">
+                        <i class="ph-fill ph-brain text-8xl"></i>
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/20 mb-4">
+                        <i class="ph-fill ph-sparkle text-yellow-300"></i>
+                        <span class="text-xs font-bold tracking-wide uppercase">Powered by Gemini AI</span>
+                    </div>
+                    <h2 class="font-montserrat text-3xl font-extrabold mb-2">Pre-Summit Idea Generator</h2>
+                    <p class="text-blue-100 text-sm max-w-lg leading-relaxed">
+                        Heading to the Day 1 Workshop? Submit a specific environmental challenge from your plant or colliery below. Our integrated AI will generate 3 predictive or Digital Twin-based solutions to kickstart your brainstorming.
+                    </p>
+                </div>
+               
+                <div class="p-8">
+                    <div class="mb-6">
+                        <label for="env-challenge" class="block text-sm font-bold text-gray-700 mb-2">Describe Your Environmental Challenge:</label>
+                        <textarea id="env-challenge" rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-tataBlue focus:border-transparent transition-all outline-none font-inter text-gray-900 placeholder-gray-400" placeholder="e.g., We are struggling to monitor and predict spontaneous heating in our coal stockpiles, leading to unexpected emissions."></textarea>
+                        <p id="ai-error-msg" class="text-red-500 text-sm mt-2 hidden"></p>
+                    </div>
+                   
+                    <button id="generate-ideas-btn" onclick="generateAISolutions()" class="bg-tataBlue hover:bg-blue-800 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center gap-2">
+                        ✨ Generate AI Solutions
+                    </button>
+
+                    <!-- AI Response Container -->
+                    <div id="ai-response-container" class="mt-8 hidden">
+                        <div class="bg-blue-50 border border-blue-100 rounded-xl p-6">
+                            <h4 class="font-montserrat font-bold text-tataBlue mb-4 flex items-center gap-2">
+                                <i class="ph-fill ph-lightbulb"></i> Suggested GenAI / Twin Approaches:
+                            </h4>
+                            <div id="ai-response-text" class="text-gray-800 text-sm leading-relaxed space-y-3">
+                                <!-- Response injected here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP Registration Section -->
+    <section id="register" class="py-24 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="text-center mb-12">
+                <h2 class="font-montserrat text-tataBlue font-bold text-sm tracking-widest uppercase mb-2">Confirm Attendance</h2>
+                <h3 class="font-montserrat text-4xl font-extrabold text-gray-900 mb-4">+EMPACT 2026 RSVP</h3>
+                <p class="text-steelGrey">Please provide your travel, accommodation, and dietary details to help us ensure a seamless experience at Lake View Recreation Centre, Joda.</p>
+            </div>
+
+            <div class="bg-white shadow-xl rounded-2xl border border-gray-100 p-8 md:p-12 text-center">
+                <div class="mb-8">
+                    <div class="w-20 h-20 bg-forestGreen/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="ph-fill ph-clipboard-text text-4xl text-forestGreen"></i>
+                    </div>
+                    <h4 class="font-montserrat text-2xl font-bold text-gray-900 mb-4">Register via Microsoft Forms</h4>
+                    <p class="text-steelGrey max-w-lg mx-auto leading-relaxed mb-2">
+                        Click the button below to open the official RSVP form. You'll be asked to provide your participant details, travel logistics, accommodation preferences, and dietary requirements.
+                    </p>
+                    <p class="text-sm text-gray-400">The form works for both internal Tata Steel employees and external partners.</p>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- TODO: Replace YOUR_FORM_ID with the actual Microsoft Forms ID -->
+                    <a href="https://forms.office.com/r/YOUR_FORM_ID" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center justify-center gap-3 bg-forestGreen hover:bg-green-800 text-white px-10 py-4 rounded-full font-bold text-lg transition-all shadow-md hover:shadow-xl transform hover:-translate-y-1">
+                        <i class="ph-bold ph-arrow-square-out text-xl"></i>
+                        Open RSVP Form
+                    </a>
+                    <p class="text-xs text-gray-500">By submitting, you confirm your availability for March 17-18, 2026. Logistics coordinators will reach out to you directly for further travel ticketing confirmations.</p>
+                </div>
+
+                <!-- What to expect -->
+                <div class="mt-10 pt-8 border-t border-gray-100">
+                    <h5 class="font-semibold text-gray-700 mb-4 text-sm uppercase tracking-wide">The form will collect</h5>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                                <i class="ph ph-user text-tataBlue text-xl"></i>
+                            </div>
+                            <span class="text-xs text-gray-600 font-medium">Participant Details</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                                <i class="ph ph-airplane text-tataBlue text-xl"></i>
+                            </div>
+                            <span class="text-xs text-gray-600 font-medium">Travel Plan</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                                <i class="ph ph-bed text-tataBlue text-xl"></i>
+                            </div>
+                            <span class="text-xs text-gray-600 font-medium">Accommodation</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                                <i class="ph ph-fork-knife text-tataBlue text-xl"></i>
+                            </div>
+                            <span class="text-xs text-gray-600 font-medium">Dietary Needs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-steelGrey text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-gray-600 pb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <h2 class="font-montserrat text-3xl font-extrabold tracking-tight mb-4">
+                        <sup class="text-2xl text-forestGreen font-black">+</sup>EMPACT <span class="text-gray-400 font-medium">2026</span>
+                    </h2>
+                    <p class="text-gray-300 text-sm leading-relaxed max-w-sm">
+                        Environment Management for Proactive Action. Restrategizing the Future of Tata Steel Environment Management through Generative AI and Digital Innovation.
+                    </p>
+                </div>
+               
+                <div>
+                    <h4 class="font-montserrat font-bold text-lg mb-4 text-gray-100">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Agenda Overview</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tata Steel Sustainability Report</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Digital Twin Portal (Internal)</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pre-read Materials</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-montserrat font-bold text-lg mb-4 text-gray-100">Helpdesk</h4>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-center gap-2">
+                            <i class="ph-fill ph-envelope-simple text-gray-400"></i>
+                            <a href="mailto:empact@tatasteel.com" class="hover:text-white transition-colors">empact@tatasteel.com</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="ph-fill ph-phone text-gray-400"></i>
+                            <span>+91 Internal Ext. 4040</span>
+                        </li>
+                        <li class="flex items-center gap-2 mt-4">
+                            <a href="#register" class="bg-tataBlue hover:bg-blue-800 text-white px-4 py-2 rounded text-xs font-bold uppercase tracking-wider transition-colors">
+                                IT Support Portal
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+           
+            <div class="flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+                <p>&copy; 2026 Tata Steel Limited. Environment Management Division.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for Interactivity and Gemini API -->
+    <script>
+        // Scroll Animation (Intersection Observer)
+        document.addEventListener("DOMContentLoaded", () => {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target); // Run once
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+
+        // Navbar Styling on Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-md');
+                nav.classList.replace('bg-white/90', 'bg-white/100');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.replace('bg-white/100', 'bg-white/90');
+            }
+        });
+
+        // --- Gemini API Integration ---
+        const apiKey = ""; // API key is provided at runtime by the environment
+
+        // Exponential backoff retry logic for robust API calls
+        async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithRetry(url, options, retries - 1, delay * 2);
+                } else {
+                    throw error;
+                }
+            }
+        }
+
+        // Function to handle the AI generation logic
+        async function generateAISolutions() {
+            const inputEl = document.getElementById('env-challenge');
+            const btnEl = document.getElementById('generate-ideas-btn');
+            const responseContainer = document.getElementById('ai-response-container');
+            const responseTextEl = document.getElementById('ai-response-text');
+            const errorMsgEl = document.getElementById('ai-error-msg');
+
+            const challenge = inputEl.value.trim();
+           
+            // Custom UI Validation instead of alert()
+            if(!challenge) {
+                errorMsgEl.textContent = "Please describe an environmental challenge to get started.";
+                errorMsgEl.classList.remove('hidden');
+                inputEl.classList.add('border-red-500');
+                return;
+            } else {
+                errorMsgEl.classList.add('hidden');
+                inputEl.classList.remove('border-red-500');
+            }
+
+            // Set UI to loading state
+            const originalBtnHtml = btnEl.innerHTML;
+            btnEl.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Analyzing Data...';
+            btnEl.disabled = true;
+            btnEl.classList.add('opacity-75', 'cursor-not-allowed');
+            responseContainer.classList.add('hidden');
+
+            // Constructing the Prompt specific to the Tata Steel context
+            const prompt = `You are a strategic AI advisor for Tata Steel's +EMPACT 2026 summit.
+            An Environment SPOC has shared this operational challenge: "${challenge}"
+            Provide 3 concise, innovative ideas on how Generative AI, Digital Twins, or predictive analytics could address this specific challenge in a steel manufacturing/mining context.
+            Format your response strictly as an HTML unnumbered list (<ul> with <li> tags).
+            Use <strong> tags to highlight the main technology for each point. Do NOT include markdown formatting or backticks around the HTML.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                systemInstruction: { parts: [{ text: "You are an expert in industrial AI and ESG technologies for heavy manufacturing." }] }
+            };
+
+            try {
+                const result = await fetchWithRetry(
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    // Inject the HTML list generated by Gemini into the DOM
+                    responseTextEl.innerHTML = text;
+                    responseContainer.classList.remove('hidden');
+                    // Scroll to the result smoothly
+                    responseContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    responseTextEl.innerHTML = "<p class='text-red-500'>Could not generate a response. Please try modifying your challenge and try again.</p>";
+                    responseContainer.classList.remove('hidden');
+                }
+            } catch (error) {
+                responseTextEl.innerHTML = "<p class='text-red-500'>API Error: Failed to connect to the Gemini AI server. Please try again later.</p>";
+                responseContainer.classList.remove('hidden');
+            } finally {
+                // Restore button state
+                btnEl.innerHTML = originalBtnHtml;
+                btnEl.disabled = false;
+                btnEl.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        }
+    </script>
+</body>
+</html>
